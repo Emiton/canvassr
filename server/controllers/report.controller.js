@@ -14,3 +14,29 @@ exports.findAll = async (req, res) => {
     });
   }
 }
+
+// Create a new report
+exports.create = async (req, res) => {
+  if (!req.body.client_name || !req.body.canvas_entry) {
+    res.status(400).send({
+      message: 'Request missing name or entry.'
+    });
+    return;
+  }
+
+  const newReport = {
+    client_name: req.body.client_name,
+    canvas_entry: req.body.canvas_entry,
+    is_published: false
+  };
+
+  try {
+    const data = await Report.create(newReport);
+    res.json(data);
+    console.log('Successfully created a new report.');
+  } catch (error) {
+    res.status(500).send({
+      message: err.message || 'Error while inserting new report into database.'
+    })
+  }
+}
