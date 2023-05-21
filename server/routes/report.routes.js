@@ -3,11 +3,15 @@ module.exports = app => {
 
   var router = require('express').Router();
   
-  // Get all reports
-  router.get('/', reports.findAll);
-  
   // Create new report
   router.post('/', reports.create);
+
+  // Get all reports
+  router.get('/', reports.findAll);
+
+  // Get a single report
+  router.get('/published/:id', reports.findOne);
+  
 
   app.use('/api/reports', router);
 }

@@ -4,6 +4,7 @@ import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import CreateReport from './pages/CreateReport';
+import ViewReport from './pages/ViewReport';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: "/create-report",
     element: <CreateReport />
+  },
+  {
+    path: "/report/:id",
+    element: <ViewReport />
   },
 ]);
 
