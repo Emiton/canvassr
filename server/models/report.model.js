@@ -6,7 +6,7 @@ module.exports = sequelize => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    client_name: {
+    canvas_entry: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
