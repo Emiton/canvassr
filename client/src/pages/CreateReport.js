@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
 export default function CreateReport() {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [entry, setEntry] = useState('');
 
@@ -22,7 +23,8 @@ export default function CreateReport() {
 
     try {
       await axios.post('/api/reports', report);
-      console.log('Successully submitted new report.');
+      alert('Successully submitted new report.');
+      navigate('/');
     } catch (err) {
       console.error(err);
       alert('Your report cannot be submitted. Please try again later.')
