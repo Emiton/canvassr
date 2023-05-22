@@ -21,6 +21,7 @@ exports.create = async (req, res) => {
     res.status(200).json(data);
     console.log('Successfully created a new report.');
   } catch (error) {
+    console.error(error);
     res.status(500).send({
       message: err.message || 'Error while inserting new report into database.'
     })
@@ -55,6 +56,7 @@ exports.findOne = async (req, res) => {
     const data = await Report.findByPk(id);
     res.status(200).json(data);
   } catch (error) {
+    console.error(error);
     res.send({
       message: error
     })
@@ -63,9 +65,6 @@ exports.findOne = async (req, res) => {
 
 // Search reports for text
 exports.search = async (req, res) => {
-  console.log('Called search');
-  console.log('PARAMS',req.query)
-
   if (!req.query.queryString) {
     console.log('missing query string')
     res.status(400).send({
@@ -101,8 +100,44 @@ exports.search = async (req, res) => {
       });
     }
   } catch (err) {
+    console.error(error);
     res.status(500).send({
       message: err || `Could not find a match for ${queryString}`
+    });
+  }
+}
+
+// Update a report
+exports.updateReport = async (req, res) => {
+  if (!req.params.id || !req.body.client_name || !req.body.canvas_entry) {
+    res.status(400).send({
+      message: 'Request missing id or body'
+    });
+  }
+
+  const id = req.params.id;
+
+  const updatedReport = {
+    client_name: req.body.client_name,
+    canvas_entry: req.body.canvas_entry,
+  };
+
+  try {
+    const [numAffectedRows] = await Report.update(updatedReport, {
+      where: { id }
+    });
+
+    if (numAffectedRows === 0) {
+      res.status(404).send({
+        message: `Cannot find Report with id=${id}`
+      });
+    } else {
+      res.status(200).json(updatedReport);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      message: 'Could not update report.'
     });
   }
 }

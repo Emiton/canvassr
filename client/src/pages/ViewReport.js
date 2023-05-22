@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate ,useParams } from "react-router-dom";
+import ReportForm from "../components/ReportForm";
 
 export default function ViewReport() {
   const { id } = useParams();
@@ -11,6 +12,8 @@ export default function ViewReport() {
   }
 
   const [report, setReport] = useState(defaultReport);
+  const [isEditable, setIsEditable] = useState(false);
+  const [viewModeText, setViewModeText] = useState('Edit report');
 
   useEffect(() => {
     const getReport = async () => {
@@ -28,12 +31,31 @@ export default function ViewReport() {
     getReport();
   }, []);
 
+  function switchViewModes() {
+    setIsEditable(!isEditable);
+    viewModeText === 'Edit report' ? 
+    setViewModeText('Cancel changes') :
+    setViewModeText('Edit report');
+  }
 
   return (
     <div>
       <Link to="/">Return to dashboard</Link>
-      <h1>{report.clientName}</h1>
-      <p>{report.canvasEntry}</p>
+      <button onClick={switchViewModes}>{viewModeText}</button>
+      {
+        isEditable ? (
+          <div>
+            <ReportForm reportName={report.clientName} reportEntry={report.canvasEntry} reportId={id}/>
+
+          </div>
+          ) : (
+          <div>
+            <h1>{report.clientName}</h1>
+            <p>{report.canvasEntry}</p>
+          </div>
+        )
+      }
+      
     </div>
   );
 }

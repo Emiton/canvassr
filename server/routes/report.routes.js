@@ -12,6 +12,9 @@ module.exports = app => {
   // Get a single report
   router.get('/published/:id', reports.findOne);
 
+  // Update a report
+  router.post('/published/:id', reports.updateReport);
+
   // Search reports for query string
   router.get('/search', reports.search);
 
