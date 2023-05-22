@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
 import CreateReport from './pages/CreateReport';
+import Dashboard from './pages/Dashboard';
+import SearchReports from './pages/SearchReports';
 import ViewReport from './pages/ViewReport';
 
 const router = createBrowserRouter([
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/report/:id",
     element: <ViewReport />
+  },
+  {
+    path: "/search",
+    element: <SearchReports />
   },
 ]);
 

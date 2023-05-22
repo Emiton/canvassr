@@ -15,9 +15,11 @@ export default function ViewReport() {
   useEffect(() => {
     const getReport = async () => {
       try {
-        const { data } = await axios.get(`/api/reports/published/${id}`)
-        console.log(data);
-        setReport({clientName: data.client_name, canvasEntry: data.canvas_entry})
+        const response = await axios.get(`/api/reports/published/${id}`)
+        if (response.status === 200) {
+          const { data } = response;
+          setReport({clientName: data.client_name, canvasEntry: data.canvas_entry})
+        }
       } catch (error) {
         alert('Could not load report');
         navigate('/');

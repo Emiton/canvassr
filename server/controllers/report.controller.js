@@ -1,5 +1,6 @@
 const db = require('../models');
 const Report = db.reports;
+const Op = db.Sequelize.Op;
 
 // Create a new report
 exports.create = async (req, res) => {
@@ -13,12 +14,11 @@ exports.create = async (req, res) => {
   const newReport = {
     client_name: req.body.client_name,
     canvas_entry: req.body.canvas_entry,
-    is_published: false
   };
 
   try {
     const data = await Report.create(newReport);
-    res.json(data);
+    res.status(200).json(data);
     console.log('Successfully created a new report.');
   } catch (error) {
     res.status(500).send({
@@ -31,7 +31,7 @@ exports.create = async (req, res) => {
 exports.findAll = async (req, res) => {
   try {
     const data = await Report.findAll();
-    res.json(data);
+    res.status(200).json(data);
     console.log('Successfully retrieved reports.');
   } catch (error) {
     console.error(error);
@@ -53,10 +53,56 @@ exports.findOne = async (req, res) => {
 
   try {
     const data = await Report.findByPk(id);
-    res.json(data);
+    res.status(200).json(data);
   } catch (error) {
     res.send({
       message: error
     })
+  }
+}
+
+// Search reports for text
+exports.search = async (req, res) => {
+  console.log('Called search');
+  console.log('PARAMS',req.query)
+
+  if (!req.query.queryString) {
+    console.log('missing query string')
+    res.status(400).send({
+      message: 'Missing search terms'
+    });
+  }
+
+  const queryString = req.query.queryString;
+
+  try {
+    const response = await Report.findAll({
+      where: {
+        [Op.or]: [
+          {
+            client_name: {
+              [Op.like]: `%${queryString}%`
+            }
+          },
+          {
+            canvas_entry: {
+              [Op.like]: `%${queryString}%`
+            }
+          }
+        ]
+      }
+    });
+  
+    if (response.length > 0) {
+      res.status(200).json(response);
+    } else {
+      res.status(404).send({
+        message: `Did not find a match for ${queryString}`
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: err || `Could not find a match for ${queryString}`
+    });
   }
 }

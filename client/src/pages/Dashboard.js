@@ -10,8 +10,10 @@ export default function Dashboard() {
   useEffect(() => {
     const getAllReports = async () => {
       try {
-        const { data } = await axios.get('/api/reports');
-        setReports(data);
+        const response = await axios.get('/api/reports');
+        if (response.status === 200) {
+          setReports(response.data);
+        }
       } catch (error) {
         console.error('Could not fetch reports', error);
       }
@@ -21,8 +23,9 @@ export default function Dashboard() {
   return (
     <div>
       <h1>Dashboard</h1>
-      <ExportCsvButton reports={reports} />
       <Link to="/create-report">Create report</Link>
+      <Link to={"/search"}>Search reports</Link>
+      <ExportCsvButton reports={reports} />
       <Reports reports={reports} />
     </div>
   );

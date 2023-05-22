@@ -18,7 +18,6 @@ const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-
 db.reports = require('./report.model')(sequelize);
 
 module.exports = db;

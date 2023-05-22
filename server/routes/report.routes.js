@@ -11,7 +11,9 @@ module.exports = app => {
 
   // Get a single report
   router.get('/published/:id', reports.findOne);
-  
+
+  // Search reports for query string
+  router.get('/search', reports.search);
 
   app.use('/api/reports', router);
 }
