@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Link } from "react-router-dom"; 
 import { useEffect, useState } from "react";
+import styled from 'styled-components'
 import ExportCsvButton from '../components/ExportCsvButton';
 import Reports from "../components/Reports";
 
@@ -21,12 +22,17 @@ export default function Dashboard() {
     getAllReports();
   }, [])
   return (
-    <div>
+    <DashboardWrapper>
       <h1>Dashboard</h1>
-      <Link to="/create-report">Create report</Link>
-      <Link to={"/search"}>Search reports</Link>
+      <Link className="report-link" to="/create-report">Create report</Link>
+      <Link className="search-link" to={"/search"}>Search reports</Link>
       <ExportCsvButton reports={reports} />
       <Reports reports={reports} />
-    </div>
+    </DashboardWrapper>
   );
 }
+
+const DashboardWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

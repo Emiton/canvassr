@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from "react";
 import { Link } from "react-router-dom"
+import styled from 'styled-components';
 
 export default function SearchReports() {
   const [queryString, setQueryString] = useState('');
@@ -49,8 +50,8 @@ export default function SearchReports() {
         {
           matchingReports.map(report => (
             <div key={report.id}>
-              <h2>{report.client_name}</h2>
-              <p>{report.canvas_entry}</p>
+              <ReportName>{report.client_name}</ReportName>
+              <ReportEntry>{report.canvas_entry}</ReportEntry>
             </div>
           ))
         }
@@ -58,3 +59,11 @@ export default function SearchReports() {
     </div>
   )
 }
+
+const ReportName = styled.h2`
+  word-wrap: break-word;
+`;
+
+const ReportEntry = styled.p`
+  word-wrap: break-word;
+`;

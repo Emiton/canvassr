@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate ,useParams } from "react-router-dom";
+import styled from "styled-components";
 import ReportForm from "../components/ReportForm";
 
 export default function ViewReport() {
@@ -50,8 +51,8 @@ export default function ViewReport() {
           </div>
           ) : (
           <div>
-            <h1>{report.clientName}</h1>
-            <p>{report.canvasEntry}</p>
+            <ReportName>{report.clientName}</ReportName>
+            <ReportEntry>{report.canvasEntry}</ReportEntry>
           </div>
         )
       }
@@ -59,3 +60,11 @@ export default function ViewReport() {
     </div>
   );
 }
+
+const ReportName = styled.h2`
+  word-wrap: break-word;
+`;
+
+const ReportEntry = styled.p`
+  word-wrap: break-word;
+`;

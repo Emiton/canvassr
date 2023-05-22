@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import styled from 'styled-components';
 import CreateReport from './pages/CreateReport';
 import Dashboard from './pages/Dashboard';
 import SearchReports from './pages/SearchReports';
 import ViewReport from './pages/ViewReport';
+import GlobalStyle from './globalStyles';
 
 const router = createBrowserRouter([
   {
@@ -26,12 +28,18 @@ const router = createBrowserRouter([
   },
 ]);
 
+const AppWrapper = styled.div`
+  margin: 16px;
+`;
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <div>
+    <AppWrapper>
       <h1>Canvassr.</h1>
       <RouterProvider router={router} />
-    </div>
+      <GlobalStyle />
+    </AppWrapper>
   </React.StrictMode>
 );
+
