@@ -27,7 +27,7 @@ export default function SearchReports() {
         alert('No matches found.');
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

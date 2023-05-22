@@ -19,7 +19,6 @@ exports.create = async (req, res) => {
   try {
     const data = await Report.create(newReport);
     res.status(200).json(data);
-    console.log('Successfully created a new report.');
   } catch (error) {
     console.error(error);
     res.status(500).send({
@@ -33,7 +32,6 @@ exports.findAll = async (req, res) => {
   try {
     const data = await Report.findAll();
     res.status(200).json(data);
-    console.log('Successfully retrieved reports.');
   } catch (error) {
     console.error(error);
     res.status(500).send({
@@ -66,7 +64,6 @@ exports.findOne = async (req, res) => {
 // Search reports for text
 exports.search = async (req, res) => {
   if (!req.query.queryString) {
-    console.log('missing query string')
     res.status(400).send({
       message: 'Missing search terms'
     });
