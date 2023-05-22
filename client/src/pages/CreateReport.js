@@ -6,7 +6,7 @@ export default function CreateReport() {
   return (
     <main>
       <h1>Create report</h1>
-      <Link to="/">Dashboard</Link>
+      <Link to="/">Return to dashboard</Link>
       <section>
         <ReportForm />
       </section>
